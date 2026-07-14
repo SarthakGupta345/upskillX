@@ -45,7 +45,6 @@ const CartCard = () => {
             {/* Center/Right: Action Links */}
             <div className="flex flex-col text-right text-sm text-[#a435f0] space-y-1 min-w-[100px]">
                 <button className="hover:text-purple-900 text-left md:text-right">Remove</button>
-                <button className="hover:text-purple-900 text-left md:text-right">Save for Later</button>
                 <button className="hover:text-purple-900 text-left md:text-right">Move to Wishlist</button>
             </div>
 

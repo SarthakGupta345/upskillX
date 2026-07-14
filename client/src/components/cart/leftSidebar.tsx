@@ -6,6 +6,7 @@ const CartLeftSide = () => {
         <div className="border-t border-gray-200 pt-4">
             {/* You can map over an array of items here in the future */}
             <CartCard />
+            <CartCard />
         </div>
     )
 }
