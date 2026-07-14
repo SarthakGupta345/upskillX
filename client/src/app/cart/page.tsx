@@ -4,7 +4,7 @@ import React from 'react'
 
 const CartPage = () => {
     return (
-        <div className="mx-auto bg-white  w-full h-screen py-5   p-6 font-sans text-gray-800">
+        <div className="mx-auto bg-white px-10  w-full h-screen py-5   p-6 font-sans text-gray-800">
             <h1 className="text-3xl font-bold mb-2">Shopping Cart</h1>
             <p className="text-sm font-semibold mb-4">1 Course in Cart</p>
 

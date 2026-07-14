@@ -5,7 +5,6 @@ const TopicHeader = () => {
         "Web Development",
         "Data Science",
         "Mobile Development",
-        "Programming Languages",
         "Game Development",
         "Database Design & Development",
         "Software Testing",
@@ -13,15 +12,9 @@ const TopicHeader = () => {
     ]
 
     return (
-        <div className="w-full bg-white border-b border-gray-200 shadow-sm overflow-x-auto scrollbar-none">
-            <div className="w-full mx-auto flex items-center h-12 px-10 whitespace-nowrap text-sm text-gray-600">
+        <div className="w-full   flex flex-row  bg-white border-b border-gray-200 shadow-sm overflow-x-auto scrollbar-none">
 
-                {/* Active/Parent Category Section */}
-                <div className="flex items-center h-full pr-2 font-bold text-gray-900 border-r border-transparent relative">
-                    <span>Development</span>
-
-
-                </div>
+            <div className="w-full px-30  mx-auto mx-auto  flex items-center h-12 px-10 whitespace-nowrap text-sm text-gray-600">
 
                 {/* Sub-Topics List */}
                 <nav className="flex items-center space-x-6 pl-6 h-full overflow-x-auto scrollbar-none flex-1">

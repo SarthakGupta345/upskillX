@@ -1,8 +1,11 @@
+import Dashboard from '@/components/dashboard/dashBoard'
 import React from 'react'
 
 const HomePage = () => {
   return (
-    <div>This is a HomePage</div>
+    <div className='h-screen w-full bg-white flex'>
+      <Dashboard />
+    </div>
   )
 }
 

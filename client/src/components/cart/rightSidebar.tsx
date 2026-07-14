@@ -2,7 +2,7 @@ import React from 'react'
 
 const CartRightSide = () => {
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="flex flex-col space-y-4 px-5">
       {/* Price Details */}
       <div>
         <span className="text-sm font-bold text-gray-500 block">Total:</span>
