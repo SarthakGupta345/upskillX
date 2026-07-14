@@ -1,14 +1,12 @@
 import { Router } from "express";
-import { signup, login } from "../controllers/auth.controller";
+import { signup, login, logout } from "../controllers/auth.controller";
 import { authMiddleware, requireInstructor } from "../middleware/loginMiddleware";
+import { getCart } from "../controllers/cart.controller";
 
 const router = Router();
 
 router.post("/signup", signup);
 router.post("/login", login);
-
-// example protected routes
-router.get("/cart", authMiddleware, getCart);
-router.post("/courses", authMiddleware, requireInstructor, createCourse);
+router.post('/logout',logout)
 
 export default router;

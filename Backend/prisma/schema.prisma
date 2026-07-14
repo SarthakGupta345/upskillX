@@ -33,7 +33,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   // as instructor
-  courses   Course[]      @relation("InstructorCourses")
+  courses Course[] @relation("InstructorCourses")
 
   // as student
   cartItems     CartItem[]
@@ -50,26 +50,26 @@ model Category {
 }
 
 model Course {
-  id           Int      @id @default(autoincrement())
-  title        String
-  description  String
-  thumbnail    String?
-  price        Float    @default(0)
-  isFree       Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  thumbnail   String?
+  price       Float    @default(0)
+  isFree      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   instructorId Int
-  instructor   User     @relation("InstructorCourses", fields: [instructorId], references: [id])
+  instructor   User @relation("InstructorCourses", fields: [instructorId], references: [id])
 
-  categoryId   Int?
-  category     Category? @relation(fields: [categoryId], references: [id])
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id])
 
-  content      CourseContent[]
-  cartItems    CartItem[]
+  content       CourseContent[]
+  cartItems     CartItem[]
   wishlistItems WishlistItem[]
-  orderItems   OrderItem[]
-  enrollments  Enrollment[]
+  orderItems    OrderItem[]
+  enrollments   Enrollment[]
 }
 
 model CourseContent {
@@ -78,7 +78,7 @@ model CourseContent {
   course    Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
   type      ContentType
   title     String
-  url       String      // S3 object URL / key
+  url       String // S3 object URL / key
   order     Int         @default(0)
   createdAt DateTime    @default(now())
 }
@@ -122,7 +122,7 @@ model OrderItem {
   order    Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
   courseId Int
   course   Course @relation(fields: [courseId], references: [id])
-  price    Float  // price at time of purchase
+  price    Float // price at time of purchase
 }
 
 model Enrollment {
