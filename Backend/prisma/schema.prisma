@@ -1,11 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -17,6 +11,18 @@ enum Role {
   INSTRUCTOR
 }
 
+enum ContentType {
+  VIDEO
+  PDF
+  IMAGE
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   username  String   @unique
@@ -25,4 +31,107 @@ model User {
   role      Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  // as instructor
+  courses   Course[]      @relation("InstructorCourses")
+
+  // as student
+  cartItems     CartItem[]
+  wishlistItems WishlistItem[]
+  orders        Order[]
+  enrollments   Enrollment[]
+}
+
+model Category {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  courses     Course[]
+}
+
+model Course {
+  id           Int      @id @default(autoincrement())
+  title        String
+  description  String
+  thumbnail    String?
+  price        Float    @default(0)
+  isFree       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  instructorId Int
+  instructor   User     @relation("InstructorCourses", fields: [instructorId], references: [id])
+
+  categoryId   Int?
+  category     Category? @relation(fields: [categoryId], references: [id])
+
+  content      CourseContent[]
+  cartItems    CartItem[]
+  wishlistItems WishlistItem[]
+  orderItems   OrderItem[]
+  enrollments  Enrollment[]
+}
+
+model CourseContent {
+  id        Int         @id @default(autoincrement())
+  courseId  Int
+  course    Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  type      ContentType
+  title     String
+  url       String      // S3 object URL / key
+  order     Int         @default(0)
+  createdAt DateTime    @default(now())
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId  Int
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, courseId])
+}
+
+model WishlistItem {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId  Int
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, courseId])
+}
+
+model Order {
+  id              Int         @id @default(autoincrement())
+  userId          Int
+  user            User        @relation(fields: [userId], references: [id])
+  totalAmount     Float
+  status          OrderStatus @default(PENDING)
+  stripeSessionId String?     @unique
+  createdAt       DateTime    @default(now())
+  items           OrderItem[]
+}
+
+model OrderItem {
+  id       Int    @id @default(autoincrement())
+  orderId  Int
+  order    Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  courseId Int
+  course   Course @relation(fields: [courseId], references: [id])
+  price    Float  // price at time of purchase
+}
+
+model Enrollment {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  courseId   Int
+  course     Course   @relation(fields: [courseId], references: [id])
+  enrolledAt DateTime @default(now())
+
+  @@unique([userId, courseId])
 }
